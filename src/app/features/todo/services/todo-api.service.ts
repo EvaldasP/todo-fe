@@ -14,4 +14,8 @@ export class TodoApiService {
   public createTodo(title: string): Observable<TodoView> {
     return this._http.post<TodoView>(`${this._baseUrl}/todos`, { title });
   }
+
+  public getUserTodos(): Observable<TodoView[]> {
+    return this._http.get<TodoView[]>(`${this._baseUrl}/todos`);
+  }
 }

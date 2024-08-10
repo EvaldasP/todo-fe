@@ -1,3 +1,7 @@
 <p>todo-list works!</p>
 
 <app-todo-form></app-todo-form>
+
+<div *ngFor="let item of todos$ | async">
+  <p>{{ item.title }}</p>
+</div>
