@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content [formGroup]="todoForm">
-    <div class="mt-5 flex flex-row justify-center">
-      <mat-form-field class="w-full">
+    <div class="mt-5 flex flex-row">
+      <mat-form-field *ngIf="editMode" class="w-full">
         <input
           type="text"
           matInput
@@ -9,15 +9,50 @@
           placeholder="Add Todo..."
         />
       </mat-form-field>
+
+      <span
+        *ngIf="!editMode"
+        class="mb-5 text-xl"
+        [ngClass]="
+          todoForm.get('isCompleted')?.value
+            ? 'text-green-300'
+            : 'text-orange-300'
+        "
+        >{{ todo.title }}</span
+      >
     </div>
     <div class="flex flex-row justify-between">
       <mat-checkbox formControlName="isCompleted"
-        >Mark as Complete</mat-checkbox
+        ><span
+          [ngClass]="{ 'text-green-300': todoForm.get('isCompleted')?.value }"
+          >{{ completionText }}</span
+        ></mat-checkbox
       >
 
       <div>
-        <button mat-icon-button color="accent">
+        <button
+          *ngIf="!editMode"
+          mat-icon-button
+          color="accent"
+          (click)="toggleEditMode()"
+        >
           <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          *ngIf="editMode"
+          mat-icon-button
+          color="accent"
+          (click)="toggleEditMode()"
+        >
+          <mat-icon>done</mat-icon>
+        </button>
+        <button
+          *ngIf="editMode"
+          mat-icon-button
+          color="warn"
+          (click)="toggleEditMode()"
+        >
+          <mat-icon>close</mat-icon>
         </button>
         <button mat-icon-button color="warn">
           <mat-icon>delete</mat-icon>
