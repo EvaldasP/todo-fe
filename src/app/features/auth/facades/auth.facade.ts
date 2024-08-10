@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { AuthApiService } from '../services/auth-api.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginPayload } from '../interfaces/login-payload.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { snackBarConfig } from 'src/app/shared/utils/get-snackbar-config';
 
 @Injectable({
   providedIn: 'root',
@@ -30,14 +31,14 @@ export class AuthFacadeService {
       .subscribe({
         next: ({ access_token }) => {
           localStorage.setItem('access_token', access_token);
+          this._router.navigate(['todos']);
         },
         error: (err) =>
-          this._snackBar.open(err.error.message || 'Login failed', 'Close', {
-            duration: 2000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-            panelClass: ['error-snackbar'],
-          }),
+          this._snackBar.open(
+            err.error.message || 'Login failed',
+            'Close',
+            snackBarConfig('error')
+          ),
       });
   }
 
