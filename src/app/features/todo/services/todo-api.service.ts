@@ -18,4 +18,8 @@ export class TodoApiService {
   public getUserTodos(): Observable<TodoView[]> {
     return this._http.get<TodoView[]>(`${this._baseUrl}/todos`);
   }
+
+  public deleteTodo(id: number): Observable<number> {
+    return this._http.delete<number>(`${this._baseUrl}/todos/${id}`);
+  }
 }

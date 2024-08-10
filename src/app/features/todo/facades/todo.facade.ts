@@ -54,4 +54,21 @@ export class TodoFacadeService {
           ),
       });
   }
+
+  public deleteTodo(id: number): void {
+    this._todoApiService
+      .deleteTodo(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (todo) => {
+          console.log(todo);
+        },
+        error: (err) =>
+          this._snackBar.open(
+            err.error.message || 'Login failed',
+            'Close',
+            snackBarConfig('error')
+          ),
+      });
+  }
 }
