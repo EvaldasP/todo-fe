@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthFacadeService } from '../../facades/auth.facade';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,10 @@ export class LoginComponent {
     }),
   });
 
-  constructor(private readonly _fb: FormBuilder) {}
+  constructor(
+    private readonly _fb: FormBuilder,
+    private readonly _authFacadeService: AuthFacadeService
+  ) {}
 
   get isFormInvalid(): boolean {
     return this.loginForm?.invalid;
@@ -30,6 +34,6 @@ export class LoginComponent {
     }
     const payload = this.loginForm.getRawValue();
 
-    console.log(payload);
+    this._authFacadeService.login(payload);
   }
 }
