@@ -11,7 +11,7 @@ export class TodoApiService {
 
   constructor(private readonly _http: HttpClient) {}
 
-  public cerateTodo(title: string): Observable<TodoView> {
+  public createTodo(title: string): Observable<TodoView> {
     return this._http.post<TodoView>(`${this._baseUrl}/todos`, { title });
   }
 }

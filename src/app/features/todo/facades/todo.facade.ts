@@ -15,7 +15,7 @@ export class TodoFacadeService {
 
   public createTodo(title: string): void {
     this._todoApiService
-      .cerateTodo(title)
+      .createTodo(title)
       .pipe(take(1))
       .subscribe({
         next: (todo) => {
