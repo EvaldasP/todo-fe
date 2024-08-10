@@ -1,7 +1,15 @@
 <p>todo-list works!</p>
 
-<app-todo-form></app-todo-form>
+<div class="flex flex-col items-center">
+  <div class="w-1/2">
+    <app-todo-form></app-todo-form>
+  </div>
 
-<div *ngFor="let item of todos$ | async">
-  <p>{{ item.title }}</p>
+  <div class="mt-10 w-1/3">
+    <div *ngFor="let todo of todos$ | async">
+      <div class="mb-5">
+        <app-todo-card [todo]="todo"></app-todo-card>
+      </div>
+    </div>
+  </div>
 </div>

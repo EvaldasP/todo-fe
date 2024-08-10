@@ -1,1 +1,28 @@
-<p>todo-card works!</p>
+<mat-card>
+  <mat-card-content [formGroup]="todoForm">
+    <div class="mt-5 flex flex-row justify-center">
+      <mat-form-field class="w-full">
+        <input
+          type="text"
+          matInput
+          formControlName="title"
+          placeholder="Add Todo..."
+        />
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row justify-between">
+      <mat-checkbox formControlName="isCompleted"
+        >Mark as Complete</mat-checkbox
+      >
+
+      <div>
+        <button mat-icon-button color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
