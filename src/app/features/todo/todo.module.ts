@@ -5,11 +5,12 @@ import { TodoCardComponent } from './pages/todo-list/components/todo-card/todo-c
 import { TodoFormComponent } from './pages/todo-list/components/todo-form/todo-form.component';
 import { MaterialModule } from 'src/app/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TodoApiService } from './services/todo-api.service';
 
 @NgModule({
   declarations: [TodoListComponent, TodoCardComponent, TodoFormComponent],
   imports: [ReactiveFormsModule, CommonModule, MaterialModule],
   exports: [],
-  providers: [],
+  providers: [TodoApiService],
 })
 export class TodoModule {}

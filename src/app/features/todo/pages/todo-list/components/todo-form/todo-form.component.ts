@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TodoFacadeService } from 'src/app/features/todo/facades/todo.facade';
 
 @Component({
   selector: 'app-todo-form',
@@ -14,7 +15,10 @@ export class TodoFormComponent {
     }),
   });
 
-  constructor(private readonly _fb: FormBuilder) {}
+  constructor(
+    private readonly _fb: FormBuilder,
+    private readonly _todoFacadeService: TodoFacadeService
+  ) {}
 
   get isFormValid(): boolean {
     return this.todoForm.valid;
@@ -25,6 +29,8 @@ export class TodoFormComponent {
       return;
     }
 
-    const payload = this.todoForm.getRawValue();
+    const { title } = this.todoForm.getRawValue();
+
+    this._todoFacadeService.createTodo(title);
   }
 }
