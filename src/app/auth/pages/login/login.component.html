@@ -2,13 +2,24 @@
   <mat-card class="min-w-96 w-1/4 flex items-center justify-center py-10">
     <mat-card-title>Login</mat-card-title>
     <mat-card-content class="w-3/4">
-      <div class="mt-5 flex flex-col">
+      <div [formGroup]="loginForm" class="mt-5 flex flex-col">
         <mat-form-field>
-          <input class="w-3/4" type="text" matInput placeholder="Username" />
+          <input
+            class="w-3/4"
+            type="text"
+            matInput
+            formControlName="username"
+            placeholder="Username"
+          />
         </mat-form-field>
 
         <mat-form-field>
-          <input type="password" matInput placeholder="Password" />
+          <input
+            type="password"
+            matInput
+            formControlName="password"
+            placeholder="Password"
+          />
         </mat-form-field>
 
         <!-- <p *ngIf="error" class="error">
@@ -16,7 +27,13 @@
         </p> -->
 
         <div class="button text-center">
-          <button mat-raised-button>Login</button>
+          <button
+            [disabled]="isFormInvalid"
+            mat-raised-button
+            (click)="onLogin()"
+          >
+            Login
+          </button>
         </div>
       </div>
     </mat-card-content>
