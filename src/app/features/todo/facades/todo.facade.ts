@@ -45,7 +45,7 @@ export class TodoFacadeService {
       .pipe(take(1))
       .subscribe({
         next: (todo) => {
-          this._todosSub$.next([todo, ...this._todosSub$.getValue()]);
+          this._todosSub$.next([...this._todosSub$.getValue(), todo]);
           this._snackBar.open(
             'Created todo successfully',
             'Close',
