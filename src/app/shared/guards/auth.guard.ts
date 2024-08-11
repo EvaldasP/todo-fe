@@ -5,7 +5,7 @@ import { AuthFacadeService } from 'src/app/features/auth/facades/auth.facade';
 export const authGuard: CanActivateFn = () => {
   const authFacadeService = inject(AuthFacadeService);
 
-  if (authFacadeService.isLoggedIn) {
+  if (authFacadeService.isTokenValid) {
     return true;
   } else {
     authFacadeService.logout();

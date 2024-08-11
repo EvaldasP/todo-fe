@@ -1,1 +1,7 @@
+<div *ngIf="isLoggedIn$ | async" class="p-2 flex justify-end">
+  <button mat-icon-button (click)="onLogout()">
+    <mat-icon color="warn">logout</mat-icon>
+  </button>
+</div>
+
 <router-outlet></router-outlet>

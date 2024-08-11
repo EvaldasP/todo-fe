@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthFacadeService } from './features/auth/facades/auth.facade';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'todo-fe';
+  public readonly isLoggedIn$ = this._authFacadeService.isLoggedIn$;
+
+  constructor(private readonly _authFacadeService: AuthFacadeService) {}
+
+  public onLogout(): void {
+    this._authFacadeService.logout();
+  }
 }

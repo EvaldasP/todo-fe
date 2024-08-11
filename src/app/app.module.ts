@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoModule } from './features/todo/todo.module';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
     BrowserAnimationsModule,
     AuthModule,
     TodoModule,
+    MaterialModule,
   ],
   providers: [
     {
