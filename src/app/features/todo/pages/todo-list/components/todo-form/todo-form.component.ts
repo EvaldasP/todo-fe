@@ -32,5 +32,6 @@ export class TodoFormComponent {
     const { title } = this.todoForm.getRawValue();
 
     this._todoFacadeService.createTodo(title);
+    this.todoForm.reset();
   }
 }

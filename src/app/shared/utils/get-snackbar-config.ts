@@ -1,7 +1,7 @@
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export const snackBarConfig = (
-  type: 'success' | 'error'
+  type?: 'success' | 'error'
 ): MatSnackBarConfig => {
   let styleClass = '';
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TodoFacadeService } from 'src/app/features/todo/facades/todo.facade';
 import { TodoView } from 'src/app/features/todo/models/todo-view.model';
 
@@ -45,5 +46,9 @@ export class TodoCardComponent implements OnInit {
 
   public onTodoDelete(): void {
     this._todoFacadeService.deleteTodo(this.todo?.id);
+  }
+
+  public onStatusChange({ checked }: MatCheckboxChange): void {
+    this._todoFacadeService.updateTodoStatus(this.todo?.id, checked);
   }
 }

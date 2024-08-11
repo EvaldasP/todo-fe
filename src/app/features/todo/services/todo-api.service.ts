@@ -19,6 +19,15 @@ export class TodoApiService {
     return this._http.get<TodoView[]>(`${this._baseUrl}/todos`);
   }
 
+  public updateTodoStatus(
+    id: number,
+    isCompleted: boolean
+  ): Observable<TodoView> {
+    return this._http.patch<TodoView>(`${this._baseUrl}/todos/status/${id}`, {
+      isCompleted,
+    });
+  }
+
   public deleteTodo(id: number): Observable<number> {
     return this._http.delete<number>(`${this._baseUrl}/todos/${id}`);
   }

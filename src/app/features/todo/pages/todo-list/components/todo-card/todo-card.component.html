@@ -22,7 +22,9 @@
       >
     </div>
     <div class="flex flex-row justify-between">
-      <mat-checkbox formControlName="isCompleted"
+      <mat-checkbox
+        [checked]="todo.isCompleted"
+        (change)="onStatusChange($event)"
         ><span
           [ngClass]="{ 'text-green-300': todoForm.get('isCompleted')?.value }"
           >{{ completionText }}</span

@@ -44,11 +44,37 @@ export class TodoFacadeService {
       .pipe(take(1))
       .subscribe({
         next: (todo) => {
-          console.log(todo);
+          this._todosSub$.next([todo, ...this._todosSub$.getValue()]);
+          this._snackBar.open(
+            'Created todo successfully',
+            'Close',
+            snackBarConfig('success')
+          );
         },
         error: (err) =>
           this._snackBar.open(
-            err.error.message || 'Login failed',
+            err.error.message,
+            'Close',
+            snackBarConfig('error')
+          ),
+      });
+  }
+
+  public updateTodoStatus(id: number, isCompleted: boolean): void {
+    this._todoApiService
+      .updateTodoStatus(id, isCompleted)
+      .pipe(take(1))
+      .subscribe({
+        next: (updatedTodo) => {
+          this._todosSub$.next(
+            this._todosSub$
+              .getValue()
+              .map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+          );
+        },
+        error: (err) =>
+          this._snackBar.open(
+            err.error.message,
             'Close',
             snackBarConfig('error')
           ),
@@ -60,12 +86,19 @@ export class TodoFacadeService {
       .deleteTodo(id)
       .pipe(take(1))
       .subscribe({
-        next: (todo) => {
-          console.log(todo);
+        next: (todoId) => {
+          this._todosSub$.next(
+            this._todosSub$.getValue().filter((todo) => todo.id !== todoId)
+          );
+          this._snackBar.open(
+            'Deleted Todo Successfully',
+            'Close',
+            snackBarConfig('success')
+          );
         },
         error: (err) =>
           this._snackBar.open(
-            err.error.message || 'Login failed',
+            err.error.message,
             'Close',
             snackBarConfig('error')
           ),
