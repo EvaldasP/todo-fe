@@ -31,9 +31,7 @@ export class TodoCardComponent implements OnInit {
   }
 
   get completionText(): string {
-    return this.todoForm.get('isCompleted')?.value
-      ? 'Completed'
-      : 'Mark as Complete';
+    return this.todo.isCompleted ? 'Completed' : 'Mark as Complete';
   }
 
   public ngOnInit(): void {

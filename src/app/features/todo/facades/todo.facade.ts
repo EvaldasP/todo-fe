@@ -26,13 +26,10 @@ export class TodoFacadeService {
       .getUserTodos()
       .pipe(take(1))
       .subscribe({
-        next: (todos) => {
-          console.log(todos);
-          this._todosSub$.next(todos);
-        },
+        next: (todos) => this._todosSub$.next(todos),
         error: (err) =>
           this._snackBar.open(
-            err.error.message || 'Login failed',
+            err.error.message,
             'Close',
             snackBarConfig('error')
           ),
@@ -66,13 +63,8 @@ export class TodoFacadeService {
       .updateTodoStatus(id, isCompleted)
       .pipe(take(1))
       .subscribe({
-        next: (updatedTodo) => {
-          this._todosSub$.next(
-            this._todosSub$
-              .getValue()
-              .map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
-          );
-        },
+        next: (updatedTodo) =>
+          this._todosSub$.next(this.getUpdatedTodos(updatedTodo)),
         error: (err) =>
           this._snackBar.open(
             err.error.message,
@@ -87,13 +79,8 @@ export class TodoFacadeService {
       .updateTodo(id, payload)
       .pipe(take(1))
       .subscribe({
-        next: (updatedTodo) => {
-          this._todosSub$.next(
-            this._todosSub$
-              .getValue()
-              .map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
-          );
-        },
+        next: (updatedTodo) =>
+          this._todosSub$.next(this.getUpdatedTodos(updatedTodo)),
         error: (err) =>
           this._snackBar.open(
             err.error.message,
@@ -125,5 +112,11 @@ export class TodoFacadeService {
             snackBarConfig('error')
           ),
       });
+  }
+
+  private getUpdatedTodos(updatedTodo: TodoView): TodoView[] {
+    return this._todosSub$
+      .getValue()
+      .map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo));
   }
 }
