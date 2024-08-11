@@ -4,8 +4,9 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { AuthFacadeService } from 'src/app/features/auth/facades/auth.facade';
 
 @Injectable()
@@ -25,7 +26,13 @@ export class JwtInterceptor implements HttpInterceptor {
         },
       });
     }
-
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this._authFacadeService.logout();
+        }
+        return throwError(() => new Error('Unauthorized'));
+      })
+    );
   }
 }
