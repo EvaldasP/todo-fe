@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, take } from 'rxjs';
-import { snackBarConfig } from 'src/app/shared/utils/get-snackbar-config';
 import { TodoApiService } from '../services/todo-api.service';
 import { TodoView } from '../models/todo-view.model';
 import { TodoPayload } from '../interfaces/todo.payload';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { NotificationMessageType } from 'src/app/shared/enums/notification-message-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class TodoFacadeService {
 
   constructor(
     private readonly _todoApiService: TodoApiService,
-    private readonly _snackBar: MatSnackBar
+    private readonly _notificationService: NotificationService
   ) {
     this.todos$ = this._todosSub$.asObservable();
   }
@@ -28,10 +28,9 @@ export class TodoFacadeService {
       .subscribe({
         next: (todos) => this._todosSub$.next(todos),
         error: (err) =>
-          this._snackBar.open(
-            err.error.message,
-            'Close',
-            snackBarConfig('error')
+          this._notificationService.showMessage(
+            err.error?.message,
+            NotificationMessageType.Error
           ),
       });
   }
@@ -43,17 +42,15 @@ export class TodoFacadeService {
       .subscribe({
         next: (todo) => {
           this._todosSub$.next([...this._todosSub$.getValue(), todo]);
-          this._snackBar.open(
-            'Created todo successfully',
-            'Close',
-            snackBarConfig('success')
+          this._notificationService.showMessage(
+            'Todo Created Sucessfully',
+            NotificationMessageType.Success
           );
         },
         error: (err) =>
-          this._snackBar.open(
-            err.error.message,
-            'Close',
-            snackBarConfig('error')
+          this._notificationService.showMessage(
+            err.error?.message,
+            NotificationMessageType.Error
           ),
       });
   }
@@ -63,13 +60,17 @@ export class TodoFacadeService {
       .updateTodoStatus(id, isCompleted)
       .pipe(take(1))
       .subscribe({
-        next: (updatedTodo) =>
-          this._todosSub$.next(this.getUpdatedTodos(updatedTodo)),
+        next: (updatedTodo) => {
+          this._todosSub$.next(this.getUpdatedTodos(updatedTodo));
+          this._notificationService.showMessage(
+            'Todo Updated Sucessfully',
+            NotificationMessageType.Success
+          );
+        },
         error: (err) =>
-          this._snackBar.open(
-            err.error.message,
-            'Close',
-            snackBarConfig('error')
+          this._notificationService.showMessage(
+            err.error?.message,
+            NotificationMessageType.Error
           ),
       });
   }
@@ -79,13 +80,17 @@ export class TodoFacadeService {
       .updateTodo(id, payload)
       .pipe(take(1))
       .subscribe({
-        next: (updatedTodo) =>
-          this._todosSub$.next(this.getUpdatedTodos(updatedTodo)),
+        next: (updatedTodo) => {
+          this._todosSub$.next(this.getUpdatedTodos(updatedTodo));
+          this._notificationService.showMessage(
+            'Todo Updated Sucessfully',
+            NotificationMessageType.Success
+          );
+        },
         error: (err) =>
-          this._snackBar.open(
-            err.error.message,
-            'Close',
-            snackBarConfig('error')
+          this._notificationService.showMessage(
+            err.error?.message,
+            NotificationMessageType.Error
           ),
       });
   }
@@ -99,17 +104,15 @@ export class TodoFacadeService {
           this._todosSub$.next(
             this._todosSub$.getValue().filter((todo) => todo.id !== todoId)
           );
-          this._snackBar.open(
-            'Deleted Todo Successfully',
-            'Close',
-            snackBarConfig('success')
+          this._notificationService.showMessage(
+            'Todo Deleted Sucessfully',
+            NotificationMessageType.Success
           );
         },
         error: (err) =>
-          this._snackBar.open(
-            err.error.message,
-            'Close',
-            snackBarConfig('error')
+          this._notificationService.showMessage(
+            err.error?.message,
+            NotificationMessageType.Error
           ),
       });
   }

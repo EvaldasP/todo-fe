@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginPayload } from '../interfaces/login-payload.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { snackBarConfig } from 'src/app/shared/utils/get-snackbar-config';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { NotificationMessageType } from 'src/app/shared/enums/notification-message-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AuthFacadeService {
     private readonly _authApiService: AuthApiService,
     private readonly _router: Router,
     private readonly _jwtHelper: JwtHelperService,
-    private readonly _snackBar: MatSnackBar
+    private readonly _notificationService: NotificationService
   ) {
     this.isLoggedIn$ = this.isLoggedInSub$.asObservable();
 
@@ -45,10 +46,9 @@ export class AuthFacadeService {
           this._router.navigate(['todos']);
         },
         error: (err) =>
-          this._snackBar.open(
-            err.error.message || 'Login failed',
-            'Close',
-            snackBarConfig('error')
+          this._notificationService.showMessage(
+            err?.error?.message,
+            NotificationMessageType.Error
           ),
       });
   }
