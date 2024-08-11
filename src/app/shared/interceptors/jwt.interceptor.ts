@@ -16,7 +16,6 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // Get the JWT token from the AuthService
     const token = this._authFacadeService.getAccessToken();
 
     if (token) {
