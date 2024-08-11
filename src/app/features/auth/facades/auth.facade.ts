@@ -4,7 +4,6 @@ import { AuthApiService } from '../services/auth-api.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginPayload } from '../interfaces/login-payload.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { NotificationMessageType } from 'src/app/shared/enums/notification-message-type.enum';
 
