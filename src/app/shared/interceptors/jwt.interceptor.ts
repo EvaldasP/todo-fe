@@ -26,6 +26,13 @@ export class JwtInterceptor implements HttpInterceptor {
         },
       });
     }
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this._authFacadeService.logout();
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }
