@@ -24,12 +24,12 @@ export class LoginComponent {
     private readonly _authFacadeService: AuthFacadeService
   ) {}
 
-  get isFormInvalid(): boolean {
-    return this.loginForm?.invalid;
+  get isFormValid(): boolean {
+    return this.loginForm?.valid;
   }
 
   public onLogin(): void {
-    if (this.isFormInvalid) {
+    if (!this.isFormValid) {
       return;
     }
     const payload = this.loginForm.getRawValue();

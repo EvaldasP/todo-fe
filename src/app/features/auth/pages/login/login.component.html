@@ -24,7 +24,7 @@
 
         <div class="button text-center">
           <button
-            [disabled]="isFormInvalid"
+            [disabled]="!isFormValid"
             mat-raised-button
             (click)="onLogin()"
           >

@@ -10,7 +10,7 @@ export class NotificationService {
 
   public showMessage(msg: string, type?: NotificationMessageType): void {
     this._snackBar.open(
-      msg || 'An unexpected error occurred',
+      msg || 'Empty message',
       'Close',
       this.getSnackBarConfig(type)
     );

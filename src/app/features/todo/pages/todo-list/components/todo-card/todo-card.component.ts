@@ -51,6 +51,10 @@ export class TodoCardComponent implements OnInit {
   }
 
   public onTodoUpdate(): void {
+    if (!this.isFormValid) {
+      return;
+    }
+
     const payload = this.todoForm.getRawValue();
 
     this._todoFacadeService.updateTodo(this.todo.id, payload);
