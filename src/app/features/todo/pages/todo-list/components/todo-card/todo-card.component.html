@@ -12,12 +12,8 @@
 
       <span
         *ngIf="!editMode"
-        class="mb-5 text-xl"
-        [ngClass]="
-          todoForm.get('isCompleted')?.value
-            ? 'text-green-300'
-            : 'text-orange-300'
-        "
+        class="mb-5 ml-2 text-xl"
+        [ngClass]="todo.isCompleted ? 'text-green-300' : 'text-orange-300'"
         >{{ todo.title }}</span
       >
     </div>
@@ -25,10 +21,9 @@
       <mat-checkbox
         [checked]="todo.isCompleted"
         (change)="onStatusChange($event)"
-        ><span
-          [ngClass]="{ 'text-green-300': todoForm.get('isCompleted')?.value }"
-          >{{ completionText }}</span
-        ></mat-checkbox
+        ><span [ngClass]="{ 'text-green-300': todo.isCompleted }">{{
+          completionText
+        }}</span></mat-checkbox
       >
 
       <div>
@@ -44,7 +39,8 @@
           *ngIf="editMode"
           mat-icon-button
           color="accent"
-          (click)="toggleEditMode()"
+          [disabled]="!isFormValid"
+          (click)="onTodoUpdate()"
         >
           <mat-icon>done</mat-icon>
         </button>

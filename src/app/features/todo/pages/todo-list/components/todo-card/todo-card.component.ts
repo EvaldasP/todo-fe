@@ -19,16 +19,16 @@ export class TodoCardComponent implements OnInit {
       validators: [Validators.required],
       nonNullable: true,
     }),
-    isCompleted: this._fb.control(false, {
-      validators: [Validators.required],
-      nonNullable: true,
-    }),
   });
 
   constructor(
     private readonly _fb: FormBuilder,
     private readonly _todoFacadeService: TodoFacadeService
   ) {}
+
+  get isFormValid(): boolean {
+    return this.todoForm?.valid;
+  }
 
   get completionText(): string {
     return this.todoForm.get('isCompleted')?.value
@@ -50,5 +50,11 @@ export class TodoCardComponent implements OnInit {
 
   public onStatusChange({ checked }: MatCheckboxChange): void {
     this._todoFacadeService.updateTodoStatus(this.todo?.id, checked);
+  }
+
+  public onTodoUpdate(): void {
+    const payload = this.todoForm.getRawValue();
+
+    this._todoFacadeService.updateTodo(this.todo.id, payload);
   }
 }

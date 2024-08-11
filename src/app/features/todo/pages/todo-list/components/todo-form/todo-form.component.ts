@@ -24,14 +24,14 @@ export class TodoFormComponent {
     return this.todoForm.valid;
   }
 
-  public onAddTodo(): void {
+  public onCreateTodo(): void {
     if (!this.isFormValid) {
       return;
     }
 
-    const { title } = this.todoForm.getRawValue();
+    const payload = this.todoForm.getRawValue();
 
-    this._todoFacadeService.createTodo(title);
+    this._todoFacadeService.createTodo(payload);
     this.todoForm.reset();
   }
 }

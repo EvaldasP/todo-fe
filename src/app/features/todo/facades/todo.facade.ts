@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, take } from 'rxjs';
 import { snackBarConfig } from 'src/app/shared/utils/get-snackbar-config';
 import { TodoApiService } from '../services/todo-api.service';
 import { TodoView } from '../models/todo-view.model';
+import { TodoPayload } from '../interfaces/todo.payload';
 
 @Injectable({
   providedIn: 'root',
@@ -38,9 +39,9 @@ export class TodoFacadeService {
       });
   }
 
-  public createTodo(title: string): void {
+  public createTodo(payload: TodoPayload): void {
     this._todoApiService
-      .createTodo(title)
+      .createTodo(payload)
       .pipe(take(1))
       .subscribe({
         next: (todo) => {
@@ -63,6 +64,27 @@ export class TodoFacadeService {
   public updateTodoStatus(id: number, isCompleted: boolean): void {
     this._todoApiService
       .updateTodoStatus(id, isCompleted)
+      .pipe(take(1))
+      .subscribe({
+        next: (updatedTodo) => {
+          this._todosSub$.next(
+            this._todosSub$
+              .getValue()
+              .map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+          );
+        },
+        error: (err) =>
+          this._snackBar.open(
+            err.error.message,
+            'Close',
+            snackBarConfig('error')
+          ),
+      });
+  }
+
+  public updateTodo(id: number, payload: TodoPayload): void {
+    this._todoApiService
+      .updateTodo(id, payload)
       .pipe(take(1))
       .subscribe({
         next: (updatedTodo) => {
