@@ -4,6 +4,7 @@ import {
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
+import { matchingPasswordsValidator } from 'src/app/shared/validators/matching-passwords.validator';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +12,14 @@ import {
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  public readonly registerForm = this._fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required],
-  });
+  public readonly registerForm = this._fb.group(
+    {
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: [''],
+    },
+    { validators: [matchingPasswordsValidator] }
+  );
 
   constructor(private readonly _fb: NonNullableFormBuilder) {}
 
