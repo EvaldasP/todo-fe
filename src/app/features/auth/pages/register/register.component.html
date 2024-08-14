@@ -29,7 +29,13 @@
           />
         </mat-form-field>
         <div class="button text-center">
-          <button mat-raised-button [disabled]="!isFormValid">Register</button>
+          <button
+            mat-raised-button
+            [disabled]="!isFormValid"
+            (click)="onRegister()"
+          >
+            Register
+          </button>
         </div>
       </div>
     </mat-card-content>

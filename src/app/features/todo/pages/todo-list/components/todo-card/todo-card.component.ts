@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { TodoFacadeService } from 'src/app/features/todo/facades/todo.facade';
 import { TodoView } from 'src/app/features/todo/models/todo-view.model';
@@ -17,12 +17,11 @@ export class TodoCardComponent implements OnInit {
   public readonly todoForm = this._fb.group({
     title: this._fb.control('', {
       validators: [Validators.required],
-      nonNullable: true,
     }),
   });
 
   constructor(
-    private readonly _fb: FormBuilder,
+    private readonly _fb: NonNullableFormBuilder,
     private readonly _todoFacadeService: TodoFacadeService
   ) {}
 

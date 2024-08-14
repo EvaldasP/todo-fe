@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, take } from 'rxjs';
 import { AuthApiService } from '../services/auth-api.service';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LoginPayload } from '../interfaces/login-payload.interface';
+import { AuthPayload } from '../interfaces/login-payload.interface';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { NotificationMessageType } from 'src/app/shared/enums/notification-message-type.enum';
 
@@ -34,7 +34,7 @@ export class AuthFacadeService {
     return !this._jwtHelper.isTokenExpired(token);
   }
 
-  public login(payload: LoginPayload): void {
+  public login(payload: AuthPayload): void {
     this._authApiService
       .login(payload)
       .pipe(take(1))
@@ -43,6 +43,22 @@ export class AuthFacadeService {
           localStorage.setItem('access_token', access_token);
           this.isLoggedInSub$.next(true);
           this._router.navigate(['todos']);
+        },
+        error: (err) =>
+          this._notificationService.showMessage(
+            err?.error?.message,
+            NotificationMessageType.Error
+          ),
+      });
+  }
+
+  public register(payload: AuthPayload): void {
+    this._authApiService
+      .register(payload)
+      .pipe(take(1))
+      .subscribe({
+        next: (isRegistered) => {
+          this._router.navigate(['login']);
         },
         error: (err) =>
           this._notificationService.showMessage(
