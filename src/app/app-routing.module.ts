@@ -4,6 +4,7 @@ import { LoginComponent } from './features/auth/pages/login/login.component';
 import { TodoListComponent } from './features/todo/pages/todo-list/todo-list.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { redirectGuard } from './shared/guards/redirect.guard';
+import { RegisterComponent } from './features/auth/pages/register/register.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-
+  {
+    canActivate: [redirectGuard],
+    path: 'register',
+    component: RegisterComponent,
+  },
   {
     canActivate: [authGuard],
     path: 'todos',
