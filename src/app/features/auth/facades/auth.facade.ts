@@ -65,8 +65,6 @@ export class AuthFacadeService {
           this._router.navigate(['login']);
         },
         error: (err) => {
-          console.log(err);
-
           this._notificationService.showMessage(
             err?.error?.message,
             NotificationMessageType.Error
