@@ -35,7 +35,5 @@ export class RegisterComponent {
     const { confirmPassword, ...payload } = this.registerForm.getRawValue();
 
     this._authFacadeService.register(payload);
-
-    console.log(this.registerForm);
   }
 }

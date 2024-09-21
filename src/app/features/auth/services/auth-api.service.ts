@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthPayload } from '../interfaces/login-payload.interface';
+import { UserView } from '../models/user-view.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthApiService {
     );
   }
 
-  public register(payload: AuthPayload): Observable<boolean> {
-    return this._http.post<boolean>(`${this._baseUrl}/auth/register`, payload);
+  public register(payload: AuthPayload): Observable<UserView> {
+    return this._http.post<UserView>(`${this._baseUrl}/auth/register`, payload);
   }
 }

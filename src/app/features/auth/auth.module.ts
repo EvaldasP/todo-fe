@@ -5,10 +5,11 @@ import { AuthFacadeService } from './facades/auth.facade';
 import { AuthApiService } from './services/auth-api.service';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, RouterModule],
   exports: [],
   providers: [AuthFacadeService, AuthApiService],
 })

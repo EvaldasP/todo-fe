@@ -57,14 +57,21 @@ export class AuthFacadeService {
       .register(payload)
       .pipe(take(1))
       .subscribe({
-        next: (isRegistered) => {
+        next: (user) => {
+          this._notificationService.showMessage(
+            `User:${user.username} successfully registered`,
+            NotificationMessageType.Success
+          );
           this._router.navigate(['login']);
         },
-        error: (err) =>
+        error: (err) => {
+          console.log(err);
+
           this._notificationService.showMessage(
             err?.error?.message,
             NotificationMessageType.Error
-          ),
+          );
+        },
       });
   }
 
